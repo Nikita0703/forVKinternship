@@ -1,5 +1,6 @@
 package com.nikita.forvkinternship.services;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -11,15 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AlbumsService {
     @Value("${my.url}")
     public String BASE_URL;
 
-    @Autowired
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
 
-    public Object getAlbums(int albumId){
+    public Object getAlbums(Long albumId){
 
         String url = BASE_URL + "/api/albums";
 

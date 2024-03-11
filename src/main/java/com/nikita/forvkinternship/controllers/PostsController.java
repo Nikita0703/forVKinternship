@@ -15,34 +15,35 @@ import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/posts")
 @PreAuthorize("hasAnyRole('ROLE_POST', 'ROLE_ADMIN')")
 public class PostsController {
 
     private final PostsService postsService;
     private final AuditsService auditsService;
 
-    @GetMapping("/api/posts/")
+    @GetMapping("/")
     public ResponseEntity<Object> getPosts(@RequestParam(required = false) Long postId, Principal principal) {
         auditsService.makeAudit(principal,true);
         Object object = postsService.getPosts(postId);
         return new ResponseEntity<>(object, HttpStatus.OK);
     }
 
-    @PostMapping("/api/posts/")
+    @PostMapping("/create")
     public ResponseEntity<String> createPost(@RequestBody Object post,Principal principal) {
         auditsService.makeAudit(principal,true);
         postsService.savePost(post);
         return new ResponseEntity<>("Post was added", HttpStatus.OK);
     }
 
-    @PutMapping("/api/posts/{postId}")
+    @PutMapping("/{postId}")
     public ResponseEntity<String> updatePost(@PathVariable Long postId, @RequestBody Object post,Principal principal) {
         auditsService.makeAudit(principal,true);
         postsService.updatePost(postId,post);
         return new ResponseEntity<>("Post was updated", HttpStatus.OK);
     }
 
-    @DeleteMapping("/api/posts/{postId}")
+    @DeleteMapping("/{postId}")
     public ResponseEntity<String> deletePost(@PathVariable Long postId,Principal principal) {
         auditsService.makeAudit(principal,true);
         postsService.deletePost(postId);

@@ -1,5 +1,6 @@
 package com.nikita.forvkinternship.services;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -10,12 +11,11 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class PostsService {
     @Value("${my.url}")
     public String BASE_URL;
-
-    @Autowired
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
     public Object getPosts(Long postId){
         String url = BASE_URL + "/api/posts";

@@ -31,7 +31,7 @@ public class UsersService {
 
     private final AuditRepository auditRepository;
 
-    public Object getUsers(int userId){
+    public Object getUsers(Long userId){
         String url = BASE_URL + "/api/users";
 
         if (userId != 0) {
@@ -64,14 +64,7 @@ public class UsersService {
         user.setUsername(request.getUsername());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.getRoles().add(ERole.ROLE_USER);
-
-      //  try {
         userRepository.save(user);
-       // } catch (Exception exception) {
-            //log.error("Error during registration {}", exception.getMessage());
-            // throw new UserExistException("The user " + user.getUsername() + " already exist. Please check credentials");
-       // }
-
     }
 
     public User getCurrentUser(Principal principal) {

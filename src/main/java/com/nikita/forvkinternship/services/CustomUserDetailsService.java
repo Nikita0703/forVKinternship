@@ -3,6 +3,7 @@ package com.nikita.forvkinternship.services;
 import com.nikita.forvkinternship.models.User;
 import com.nikita.forvkinternship.models.enums.ERole;
 import com.nikita.forvkinternship.repositories.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,18 +17,13 @@ import java.util.List;
 
 
 @Service
+@RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
-
-    @Autowired
-    public CustomUserDetailsService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     @Override
     public UserDetails loadUserByUsername(String username) {
         User user = userRepository.findUserByUsername(username);
-             //   .orElseThrow(() -> new UsernameNotFoundException("Username not found with username: " + username));
         return build(user);
     }
 
